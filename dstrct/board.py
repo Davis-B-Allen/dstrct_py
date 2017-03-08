@@ -66,10 +66,11 @@ class Board:
         print(spacing + ("-------" * self.columns) + ("-" * (self.columns + 1)))
 
         for ct2 in range(self.rows):
-            row1 = row2 = row3 = ""
+            row1 = row2 = row3 = row4 = ""
             row1 += spacing
             row2 = row2 + Game_Settings.num_to_alpha(ct2) + spacing[0:-1]
             row3 += spacing
+            row4 += spacing
             #row1
             row1 += "|"
             #row2
@@ -97,7 +98,7 @@ class Board:
                         row1 += "|"
 
                     if vert != None:
-                        row2 += vert
+                        row2 += str(vert)
                     else:
                         row2 += "|"
 
@@ -106,6 +107,16 @@ class Board:
                         row3 += " "
                     else:
                         row3 += "|"
+                if ct2 < (self.rows - 1):
+                    horizontal = self.horizontal_borders[ct2][ct3]
+                    row4 += "-"
+                    if horizontal is not None:
+                        row4 += "   " + str(horizontal) + "   "
+                    else:
+                        row4 += "-------"
+            if ct2 < (self.rows - 1):
+                row4 += "-"
+
 
             row1 += "       |"
             row2 += "|"
@@ -114,7 +125,9 @@ class Board:
             print(row1)
             print(row2)
             print(row3)
+            if ct2 < (self.rows - 1):
+                print(row4)
 
             # TODO update this so that it prints the horizontal borders properly
 
-            print(spacing + ("-------" * self.columns) + ("-" * (self.columns + 1)))
+        print(spacing + ("-------" * self.columns) + ("-" * (self.columns + 1)))
