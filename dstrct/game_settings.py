@@ -1,5 +1,6 @@
 class Game_Settings:
 
+    max_district_size = 7
     num_alpha_nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     num_alpha_alphas = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
     num_alpha_map = dict()

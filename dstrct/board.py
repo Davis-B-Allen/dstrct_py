@@ -25,7 +25,7 @@ class Board:
         for j in range(self.rows):
             row = []
             for k in range(self.columns):
-                tile = Tile((j,k), pool.pop())
+                tile = Tile((j, k), pool.pop())
                 row.append(tile)
             tilegrid.append(row)
         # Initialize vertical borders to None
@@ -40,6 +40,36 @@ class Board:
             for count4 in range(self.columns):
                 row.append(None)
             self.horizontal_borders.append(row)
+
+    def update_borders(self, map_id, district):
+        # check the surrounding tiles
+        # find any that share a district with the passed in argument
+        # find the borders that join those tiles and the tile represented by map_id
+        # update those borders to hold the value of the district passed in in the argument
+        coords = Game_Settings.map_id_to_coords(map_id)
+        same_district_neighbors = []
+        tile = self.tilegrid[coords[0]][coords[1]]
+        for i in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
+            coords_adjacent = (coords[0] + i[0], coords[1] + i[1])
+            tile_adjacent = self.tilegrid[coords_adjacent[0]][coords_adjacent[1]]
+            if tile_adjacent.district == district:
+                same_district_neighbors.append(tile_adjacent)
+        for tile_adjacent in same_district_neighbors:
+            # compare tile_adjacent to tile and find their shared border
+            # update that border with district argument
+            row_index = min([tile.coords[0], tile_adjacent.coords[0]])
+            col_index = min([tile.coords[1], tile_adjacent.coords[1]])
+            if tile.coords[0] == tile_adjacent.coords[0]:
+                self.vertical_borders[row_index][col_index] = district
+            elif tile.coords[1] == tile_adjacent.coords[1]:
+                self.horizontal_borders[row_index][col_index] = district
+            # print("########")
+            # print(tile.coords[0])
+            # print(tile.coords[1])
+            # print(tile_adjacent.coords[0])
+            # print(tile_adjacent.coords[1])
+            # print("########")
+            pass
 
     def print_board_simple(self):
         header = "   "
@@ -71,14 +101,14 @@ class Board:
             row2 = row2 + Game_Settings.num_to_alpha(ct2) + spacing[0:-1]
             row3 += spacing
             row4 += spacing
-            #row1
+            # row1
             row1 += "|"
-            #row2
+            # row2
             row2 += "|"
-            #row3
+            # row3
             row3 += "|"
             for ct3 in range(self.columns):
-                #do the voter info and spacing
+                # do the voter info and spacing
                 row2 += "  "
                 tile = self.tilegrid[ct2][ct3]
                 row2 += tile.voter_preference
@@ -127,7 +157,5 @@ class Board:
             print(row3)
             if ct2 < (self.rows - 1):
                 print(row4)
-
-            # TODO update this so that it prints the horizontal borders properly
 
         print(spacing + ("-------" * self.columns) + ("-" * (self.columns + 1)))
