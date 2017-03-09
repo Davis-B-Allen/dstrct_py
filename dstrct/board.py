@@ -112,7 +112,7 @@ class Board:
                 row2 += "  "
                 tile = self.tilegrid[ct2][ct3]
                 row2 += tile.voter_preference
-                if tile.district == None:
+                if tile.district is None:
                     row2 += tile.voter_preference
                 else:
                     row2 += str(tile.district)
@@ -122,18 +122,18 @@ class Board:
                     vert = self.vertical_borders[ct2][ct3]
 
                     row1 += "       "
-                    if vert != None:
+                    if vert is not None:
                         row1 += " "
                     else:
                         row1 += "|"
 
-                    if vert != None:
+                    if vert is not None:
                         row2 += str(vert)
                     else:
                         row2 += "|"
 
                     row3 += "       "
-                    if vert != None:
+                    if vert is not None:
                         row3 += " "
                     else:
                         row3 += "|"
@@ -147,11 +147,10 @@ class Board:
             if ct2 < (self.rows - 1):
                 row4 += "-"
 
-
             row1 += "       |"
             row2 += "|"
             row3 += "       |"
-            #row3
+            # row3
             print(row1)
             print(row2)
             print(row3)
