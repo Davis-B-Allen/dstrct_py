@@ -1,6 +1,7 @@
 from tile import Tile
 from game_settings import Game_Settings
 from random import shuffle
+from math import ceil
 
 
 class Board:
@@ -9,6 +10,8 @@ class Board:
         self.rows = rows
         self.columns = columns
         self.tilegrid = []
+        self.played_tiles = []
+        self.unplayed_tiles = []
         self.districts = []
         self.vertical_borders = []
         self.horizontal_borders = []
@@ -18,7 +21,7 @@ class Board:
     def set_up_board(self, tilegrid):
         # Create random distribution of tiles with same number of each type of voter
         pool = []
-        for i in range(self.rows * self.columns):
+        for i in range(ceil(((self.rows * self.columns)/2))):
             pool.append(1)
             pool.append(0)
         shuffle(pool)
@@ -51,9 +54,10 @@ class Board:
         tile = self.tilegrid[coords[0]][coords[1]]
         for i in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
             coords_adjacent = (coords[0] + i[0], coords[1] + i[1])
-            tile_adjacent = self.tilegrid[coords_adjacent[0]][coords_adjacent[1]]
-            if tile_adjacent.district == district:
-                same_district_neighbors.append(tile_adjacent)
+            if 0 <= coords_adjacent[0] < self.rows and 0 <= coords_adjacent[1] < self.columns:
+                tile_adjacent = self.tilegrid[coords_adjacent[0]][coords_adjacent[1]]
+                if tile_adjacent.district == district:
+                    same_district_neighbors.append(tile_adjacent)
         for tile_adjacent in same_district_neighbors:
             # compare tile_adjacent to tile and find their shared border
             # update that border with district argument
