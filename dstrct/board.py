@@ -29,6 +29,7 @@ class Board:
             row = []
             for k in range(self.columns):
                 tile = Tile((j, k), pool.pop())
+                self.unplayed_tiles.append(tile)
                 row.append(tile)
             tilegrid.append(row)
         # Initialize vertical borders to None
