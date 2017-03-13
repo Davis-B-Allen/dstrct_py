@@ -12,7 +12,9 @@ class Board:
         self.tilegrid = []
         self.played_tiles = []
         self.unplayed_tiles = []
+        self.remnants = []
         self.districts = []
+        self.remnant_groups = []
         self.vertical_borders = []
         self.horizontal_borders = []
         print("Setting up board...\n")
@@ -116,12 +118,10 @@ class Board:
                 # do the voter info and spacing
                 row2 += "  "
                 tile = self.tilegrid[ct2][ct3]
-                row2 += tile.voter_preference
                 if tile.district is None:
-                    row2 += tile.voter_preference
+                    row2 += " " + tile.voter_preference + " "
                 else:
-                    row2 += str(tile.district)
-                row2 += tile.voter_preference
+                    row2 += tile.voter_preference + str(tile.district) + tile.voter_preference
                 row2 += "  "
                 if ct3 < (self.columns - 1):
                     vert = self.vertical_borders[ct2][ct3]
